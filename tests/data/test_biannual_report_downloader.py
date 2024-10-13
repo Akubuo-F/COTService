@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 
 from src.data.biannual_report_downloader import BiannualReportDownloader
+from src.utils.directory_helper import DirectoryHelper
 
 
 class TestBiannualReportDownloader(unittest.TestCase):
@@ -12,7 +13,8 @@ class TestBiannualReportDownloader(unittest.TestCase):
 
     def test_download(self):
         try:
-            result: pd.DataFrame = self._report_downloader.download()
+            csv_filepath: str = f"{DirectoryHelper().root_dir}/storage/biannual_cot_report.csv"
+            result: pd.DataFrame = self._report_downloader.download(csv_filepath)
 
             result_length: int = len(result)
             self.assertNotEqual(0, result_length, "COT report is empty.")
