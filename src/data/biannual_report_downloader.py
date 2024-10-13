@@ -13,10 +13,16 @@ class BiannualReportDownloader(AbstractReportDownloader):
 
     def __init__(self):
         self._logger: logging.Logger = Logger(__name__, DirectoryHelper().log_dir).get_logger()
-        self._downloaded_report: pd.DataFrame = pd.DataFrame()
 
     def download(self, csv_filepath: str | None = None) -> pd.DataFrame:
         try:
+            self._logger.info("Checking for stored reports...")
+            from_storage: pd.DataFrame | None = super()._from_storage(csv_filepath)
+            if from_storage is not None:
+                self._logger.info("COT reports fetched from storage.")
+                return from_storage
+            else:
+                self._logger.info("No valid stored reports found, downloading new reports ...")
             current_year: int = datetime.datetime.now().year
             previous_year: int = current_year - 1
             downloaded_reports: list[pd.DataFrame] = []
@@ -32,7 +38,7 @@ class BiannualReportDownloader(AbstractReportDownloader):
             self._logger.info("COT reports downloaded successfully.")
             reports: pd.DataFrame = pd.concat(downloaded_reports, ignore_index=True)
             reports.to_csv(csv_filepath) if csv_filepath else ...
-            return reports
+            return self._from_storage(csv_filepath)
         except Exception as e:
             self._logger.info(f"Failed to download COT reports: {e}.")
             raise
