@@ -19,6 +19,10 @@ class AbstractReportDownloader(ABC):
         ...
 
     @staticmethod
+    def _to_storage(data: pd.DataFrame, csv_filepath: str) -> None:
+        AbstractReportDownloader._sort_reports(data).to_csv(csv_filepath)
+
+    @staticmethod
     def _from_storage(csv_filepath: str) -> pd.DataFrame | None:
         """
         Returns a locally stored CTFT COT reports if it exists.
@@ -39,5 +43,5 @@ class AbstractReportDownloader(ABC):
 
     @staticmethod
     def _sort_reports(reports: pd.DataFrame) -> pd.DataFrame:
-        reports['As of Date in Form YYYY-MM-DD'] = pd.to_datetime(reports['As of Date in Form YYYY-MM-DD'])
-        return reports.sort_values(by='As of Date in Form YYYY-MM-DD')
+        reports['As of Date in Form YYYY-MM-DD'] = pd.to_datetime(reports['As of Date in Form YYYY-MM-DD']).dt.strftime("%Y-%m-%d")
+        return reports.sort_values(by=["Market and Exchange Names", 'As of Date in Form YYYY-MM-DD'])

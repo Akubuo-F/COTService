@@ -12,7 +12,7 @@ from src.utils.logger import Logger
 class BiannualReportDownloader(AbstractReportDownloader):
 
     def __init__(self):
-        self._logger: logging.Logger = Logger(__name__, DirectoryHelper().log_dir).get_logger()
+        self._logger: logging.Logger = Logger(__name__, DirectoryHelper.log_dir()).get_logger()
 
     def download(self, csv_filepath: str | None = None) -> pd.DataFrame:
         try:
@@ -37,7 +37,7 @@ class BiannualReportDownloader(AbstractReportDownloader):
 
             self._logger.info("COT reports downloaded successfully.")
             reports: pd.DataFrame = pd.concat(downloaded_reports, ignore_index=True)
-            reports.to_csv(csv_filepath) if csv_filepath else ...
+            super()._to_storage(reports, csv_filepath) if csv_filepath else ...
             return self._from_storage(csv_filepath)
         except Exception as e:
             self._logger.info(f"Failed to download COT reports: {e}.")
