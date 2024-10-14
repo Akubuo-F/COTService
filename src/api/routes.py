@@ -12,39 +12,34 @@ async def get_latest_report():
             "contract_name": "",
             "open_interest": {
                 "total": 0,
-                "speculators": {
-                    "ratio": 0.00,
-                    "change": 0
+                "speculators": 0,
+                "hedgers": 0
+            },
+            "changes": {
+                "open_interest": {
+                    "total": 0,
+                    "speculators": 0,
+                    "hedgers": 0
                 },
-                "hedgers": {
-                    "ratio": 0.00,
-                    "change": 0
+                "traders_positions": {
+                    "noncommercial": {
+                        "long": 0,
+                        "short": 0
+                    },
+                    "commercial": {
+                        "long": 0,
+                        "short": 0
+                    }
                 }
             },
-            "noncommercial_positions": {
-                "long": 0,
-                "short": 0,
-                "open_interest": 0,
-                "long_ratio": 0.00,
-                "short_ratio": 0.00,
-                "change_in_long": 0,
-                "change_in_short": 0,
-                "net_position": 0
-            },
-            "commercial_positions": {
-                "long": 0,
-                "short": 0,
-                "open_interest": 0,
-                "long_ratio": 0.00,
-                "short_ratio": 0.00,
-                "change_in_long": 0,
-                "change_in_short": 0,
-                "net_position": 0
-            },
-            "net_positions": {
-                "total": 0,
-                "commercial": 0,
-                "noncommercial": 0
+            "positions": {
+                "noncommercial_long": 0,
+                "noncommercial_short": 0,
+                "commercial_long": 0,
+                "commercial_short": 0,
+                "net": 0,
+                "net_commercial": 0,
+                "net_noncommercial": 0
             },
             "historical_comparisons": {
                 "previous_week": {
@@ -59,12 +54,12 @@ async def get_latest_report():
                 },
                 "historical_average": {
                     "noncommercial": {
-                        "long": 0,
-                        "short": 0
+                        "long": 0.00,
+                        "short": 0.00
                     },
                     "commercial": {
-                        "long": 0,
-                        "short": 0
+                        "long": 0.00,
+                        "short": 0.00
                     }
                 }
             },

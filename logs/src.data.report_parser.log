@@ -1,0 +1,5 @@
+'2024-10-14 16:27:12,247 - src.data.report_parser - ERROR - Can't find Contract Name (Market and Exchange Names) as a column in data.
+'2024-10-14 16:29:32,441 - src.data.report_parser - ERROR - Can't find Contract Name (Market and Exchange Names) as a column in data.
+'2024-10-14 16:31:29,478 - src.data.report_parser - ERROR - Can't find 'Market and Exchange Names' as a column in data.
+'2024-10-14 16:32:02,002 - src.data.report_parser - ERROR - Can't find 'Market and Exchange Names' as a column in data.
+'2024-10-14 23:24:15,819 - src.data.report_parser - ERROR - Can't parse data, must have a least 2 reports in data.
