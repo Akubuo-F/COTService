@@ -3,6 +3,7 @@ from src.models.changes_in_open_interest import ChangesInOpenInterest
 from src.models.changes_in_positions import ChangesInPositions
 from src.models.open_interest import OpenInterest
 from src.models.positions import Positions
+from src.models.ratios import Ratios
 
 
 class CotReport:
@@ -19,6 +20,14 @@ class CotReport:
         self._contract_name: str = contract_name
         self._open_interest: OpenInterest = open_interest
         self._positions: Positions = positions
+        self._ratios: Ratios = Ratios(
+            open_interest.speculators,
+            open_interest.hedgers,
+            positions.noncommercial_long,
+            positions.noncommercial_short,
+            positions.commercial_long,
+            positions.commercial_short
+        )
         self._changes: Changes = changes if changes else Changes(
             ChangesInOpenInterest(0, 0, 0),
             ChangesInPositions(0, 0, 0, 0)
@@ -30,6 +39,7 @@ class CotReport:
             "contract_name": self._contract_name,
             "open_interest": self._open_interest.to_dict(),
             "positions": self._positions.to_dict(),
+            "ratios": self._ratios.to_dict(),
             "changes": self._changes.to_dict()
         }
 
@@ -53,13 +63,17 @@ class CotReport:
         return self._positions
 
     @property
+    def ratios(self) -> Ratios:
+        return self._ratios
+
+    @property
     def changes(self) -> Changes:
         return self._changes
 
     def __repr__(self) -> str:
         report_date: str = f"report date: {self.report_date}"
         contract_name: str = f"contract name: {self._contract_name}"
-        return f"COT Report({report_date}, {contract_name}, {self.open_interest}, {self._positions}, {self._changes})"
+        return f"COT Report({report_date}, {contract_name}, {self.open_interest}, {self._positions}, {self._ratios}, {self._changes})"
 
     def __str__(self) -> str:
         return self.__repr__()

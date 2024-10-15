@@ -2,19 +2,20 @@ class Ratios:
 
     def __init__(
             self,
-            speculators: float,
-            hedgers: float,
-            noncommercial_long: float,
-            noncommercial_short: float,
-            commercial_long: float,
-            commercial_short: float
+            speculators: int,
+            hedgers: int,
+            noncommercial_long: int,
+            noncommercial_short: int,
+            commercial_long: int,
+            commercial_short: int
     ):
-        self._speculators: float = round(speculators, 1)
-        self._hedgers: float = round(hedgers, 1)
-        self._noncommercial_long: float = round(noncommercial_long, 1)
-        self._noncommercial_short: float = round(noncommercial_short, 1)
-        self._commercial_long: float = round(commercial_long, 1)
-        self._commercial_short: float = round(commercial_short, 1)
+        total: int = speculators + hedgers
+        self._speculators: float = round((speculators/total) * 100, 1)
+        self._hedgers: float = round((hedgers/total) * 100, 1)
+        self._noncommercial_long: float = round((noncommercial_long/speculators) * 100, 1)
+        self._noncommercial_short: float = round((noncommercial_short/speculators) * 100, 1)
+        self._commercial_long: float = round((commercial_long/hedgers) * 100, 1)
+        self._commercial_short: float = round((commercial_short/hedgers) * 100, 1)
 
     def to_dict(self) -> dict:
         return {
